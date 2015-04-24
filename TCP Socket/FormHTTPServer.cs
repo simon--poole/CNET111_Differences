@@ -47,10 +47,14 @@ namespace TCP_Socket
         TcpListener   listeningSocket  = null;   //Listening socket.
         Socket        connection       = null;   //TCP/IP socket to handle the actual connection
 
-
+         
         IPAddress     ipAddress        = null;
         IPHostEntry   localHostInfo    = null;
-        int           listenPort       = 80;    //Usual HTTP port is 80.
+        /* Usual HTTP port is 80 BUT
+         * I had to change this to run it on my laptop
+         * as port 80 caused conflicts
+         */
+        int           listenPort       = 800;    
 
         String        hostName         = null;
         String        userName         = null;
@@ -82,10 +86,7 @@ namespace TCP_Socket
             hostName  = localHostInfo.HostName;
 
 
-            listBoxStatus.Items.Add("Nigel's HTTP server here.   I am");
-            listBoxStatus.Items.Add("running on host " + hostName);
-            listBoxStatus.Items.Add("and your name is " + userName + ".");
-            listBoxStatus.Items.Add("Listening on port " + listenPort);
+            listBoxStatus.Items.Add("Serving pages via localhost:"+listenPort);
             listBoxStatus.Items.Add("I seem to have the following IP numbers");
 
             foreach(IPAddress ip in localHostInfo.AddressList)
@@ -103,9 +104,7 @@ namespace TCP_Socket
             
             //listeningSocket = new TcpListener(ipAddress, listenPort);
             listeningSocket = new TcpListener(IPAddress.Any, listenPort);
-            
             listeningSocket.Start();
-
             listBoxStatus.Refresh();  //update the form.
         }
 
